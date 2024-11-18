@@ -1,0 +1,17 @@
+import {ApiResponses} from '../types/ApiResponses'
+
+export async function sendVerificationEmail (
+    email : string,
+    username : string,
+    verifyCode : string
+):Promise<ApiResponses>{
+    try {
+         
+        return {success : true, message:"verification email sent"}
+
+    } catch (emailError) {
+        console.log("Error sending email error",emailError);
+        return {success : false, message:"Failed to send verification email"}
+        
+    }
+}
