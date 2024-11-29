@@ -1,5 +1,5 @@
 {
-  "name": "mystery-app",
+  "name": "feedback-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "mongoose": "^8.8.3",
     "next": "15.0.3",
+    "next-auth": "^4.24.10",
     "nodemailer": "^6.9.16",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.16",
     "@types/react": "^18",
