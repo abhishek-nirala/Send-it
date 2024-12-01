@@ -5,13 +5,16 @@ type ConnectionObject = {
 }
 const connection: ConnectionObject = {}
 
+const {username,password} = process.env
+const connectionStr = `mongodb+srv://${username}:${password}@cluster0.9eksm.mongodb.net/feedbackApp?retryWrites=true&w=majority&appName=Cluster0`
+
 async function dbConnect(): Promise<void> {
     if (connection.isConnect) {
         console.log("db already connected");
         return;
     }
     try {
-        const db = await mongoose.connect(process.env.MONGO_URI || '')
+        const db = await mongoose.connect(connectionStr || '')
         console.log('db : ', db)
         connection.isConnect = db.connections[0].readyState
         console.log("db connected successfully");
