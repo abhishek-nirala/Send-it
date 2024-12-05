@@ -2,7 +2,12 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { sendVerificationEmail } from '@/helpers/sendVerificationEmail'
 import bcrypt from 'bcrypt'
+// import { NextResponse } from "next/server";
+ 
 
+export async function GET(){
+    return Response.json({success : true, msg:"signUp"})
+}
 
 export async function POST(req: Request) {
     await dbConnect();
@@ -33,7 +38,10 @@ export async function POST(req: Request) {
                 existingUserByEmail.verifyCode = verifyCode;
                 existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 360000);
                 await existingUserByEmail.save();
-
+                return Response.json({
+                    success : true,
+                    message : "User verified with this email."
+                },{status : 200})
             }
         } else {
             const hashedPassword = await bcrypt.hash(password, 10)
@@ -58,6 +66,12 @@ export async function POST(req: Request) {
 
         const emailResponse = await sendVerificationEmail(email, username, verifyCode)
         console.log(emailResponse);
+
+        return Response.json({ 
+            success : true,
+            message : "User registered."
+        },{status : 200})
+
 
 
     } catch (error) {

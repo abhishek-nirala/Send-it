@@ -1,5 +1,5 @@
 import { ApiResponses } from '../types/ApiResponses'
-import {sendMail} from '../lib/SendEmail'
+import {sendMailOptions} from '../lib/SendEmail'
 
 export async function sendVerificationEmail(
     email: string,
@@ -8,8 +8,8 @@ export async function sendVerificationEmail(
 ): Promise<ApiResponses> {
     try {
 
-        await sendMail({
-            from: 'Your Name <your-email-address>',
+        await sendMailOptions({
+            from: process.env.SMTP_SERVER_USENAME,
             to: email,
             subject: 'FeedBack App | Verification Code',
             text: `your verification code for ${username} is ${verifyCode}`,
