@@ -5,11 +5,10 @@ import bcrypt from 'bcrypt'
 // import { NextResponse } from "next/server";
  
 
-export async function GET(){
-    return Response.json({success : true, msg:"signUp"})
-}
+
 
 export async function POST(req: Request) {
+
     await dbConnect();
     try {
         const { username, email, password } = await req.json()
@@ -24,7 +23,7 @@ export async function POST(req: Request) {
         }
         const existingUserByEmail = await UserModel.findOne({ email })
 
-        const verifyCode = Math.ceil(1000 + Math.random() * 5000).toString();
+        const verifyCode = Math.ceil(100000 + Math.random() * 5000).toString();
 
         if (existingUserByEmail) {
             if(existingUserByEmail.isVerified){
