@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
                 await dbConnect()
                 try {
                     const user = await UserModel.findOne({
-                        $or: [
+                        $or: [      //mongodb or operator
                             { email: credentials.identifier },
                             { username: credentials.identifier },
                         ]
