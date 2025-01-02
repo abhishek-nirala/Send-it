@@ -9,7 +9,7 @@ export async function sendVerificationEmail(
     try {
 
         await sendMailOptions({
-            from: process.env.SMTP_SERVER_USENAME,
+            from: process.env.SMTP_SERVER_USERNAME,
             to: email,
             subject: 'FeedBack App | Verification Code',
             text: `your verification code for ${username} is ${verifyCode}`,
