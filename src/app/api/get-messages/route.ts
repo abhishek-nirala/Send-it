@@ -38,6 +38,10 @@ export async function GET() {
         }, { status: 200 })
     } catch (error) {
         console.log("error while getting messages : ", error);
+        return Response.json({
+            success: false,
+            message: "Internall error occured while getting messages"
+        }, { status: 500 })
 
     }
 
