@@ -46,6 +46,7 @@ const SignUp = () => {
 
   useEffect(() => {
     const checkUsernameUnique = async () => {
+      // setUsernameMessage('')
       if (username) {
         setIsCheckingUsername(true);
         setUsernameMessage('');
@@ -54,7 +55,7 @@ const SignUp = () => {
           const response = await axios.get(`/api/check-username-unique?username=${username}`)
           setUsernameMessage(response.data.message)
         } catch (error) {
-          console.log(error)
+          // console.log(error)
           const axiosError = error as AxiosError<ApiResponses>
           setUsernameMessage(axiosError.response?.data.message ?? "Error checking available username")
         } finally {
@@ -79,7 +80,7 @@ const SignUp = () => {
         description: "You have been registered successfully",
         duration: 3000,
       })
-      router.push(`/verify/${username}`)
+      router.push(`/verifyCode/${username}`)
     } catch (error) {
       console.log(error)
       const axiosError = error as AxiosError<ApiResponses>
