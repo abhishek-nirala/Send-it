@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
 
                     if (isPasswordCorrect) return user;
-                    else throw new Error("incorrrect password")
+                    else throw new Error("incorrect password")
 
                 } catch (error) {
                     if (error instanceof Error) {

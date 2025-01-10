@@ -39,7 +39,7 @@ const SignIn = () => {
     try {
       const result = await signIn('credentials', {
         redirect: false,
-        email: data.email,
+        identifier: data.email,
         password: data.password
       })
       console.log("signIn result : ", result)
