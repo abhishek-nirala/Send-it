@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
+import Link from "next/link"
 
 
 const SignUp = () => {
@@ -102,8 +103,8 @@ const SignUp = () => {
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
             Join FeedBack App
           </h1>
-          <p className="text-lg text-gray-600 mb-8 mt-5">Anonymous Feedback </p>
-          <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
+          <p className="text-lg text-gray-600 mb-3 mt-5">to give anonymous Feedback </p>
+          <h2 className="text-2xl font-bold mb-3">Sign Up</h2>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -173,6 +174,12 @@ const SignUp = () => {
               </Button>
             </form>
           </Form>
+          <div className="mt-5">
+            <span className="">
+              Have you already joined? 
+            </span>
+            <Link href="/sign-in" className="text-blue-700 font-bold font-mono"> Sign-In</Link>
+          </div>
         </div>
       </main>
 

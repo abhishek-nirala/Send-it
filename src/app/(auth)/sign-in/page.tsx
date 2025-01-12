@@ -21,6 +21,8 @@ import { Button } from '@/components/ui/button'
 import { singInSchema } from '@/schemas/signInSchema'
 import React from 'react'
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
+
 const SignIn = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -86,7 +88,7 @@ const SignIn = () => {
                   <FormItem className="text-left space-y-2">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="example001@email.com"
+                      <Input type="text" placeholder="example001@email.com"
                         {...field}
                       />
                     </FormControl>
@@ -122,6 +124,12 @@ const SignIn = () => {
               </Button>
             </form>
           </Form>
+          <div className="mt-5">
+            <span className="">
+              Have you not joined yet? 
+            </span>
+            <Link href="/sign-up" className="text-blue-700 font-bold font-mono"> Sign-Up</Link>
+          </div>
         </div>
       </main>
 
