@@ -54,7 +54,8 @@ const SignIn = () => {
       }
       console.log("result.error : ", result?.error)
       if (result?.url) {
-        router.push('/dashboard')
+        router.push('/look-up')
+        // alert("you have successfully logged in")
       }
     } catch (error) {
       console.log(error);
