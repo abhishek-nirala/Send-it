@@ -20,7 +20,7 @@ export async function GET() {
 
     try {
         const user = await UserModel.aggregate([
-            { $match: { $id: userId } },
+            { $match: { $_id: userId } },
             { $unwind: '$messages' },
             { $sort: { 'messages.createdAt': -1 } },
             { $group: { _id: '$id', messages: { $push: '$messages' } } }
@@ -40,7 +40,7 @@ export async function GET() {
         console.log("error while getting messages : ", error);
         return Response.json({
             success: false,
-            message: "Internall error occured while getting messages"
+            message: "Internal error occurred while getting messages"
         }, { status: 500 })
 
     }
