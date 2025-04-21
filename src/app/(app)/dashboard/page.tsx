@@ -7,7 +7,7 @@ import { Message, User } from "@/model/User"
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema"
 import { ApiResponses } from "@/types/ApiResponses"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Separator } from "@radix-ui/react-separator"
+// import { Separator } from "@radix-ui/react-separator"
 import { Switch } from "@radix-ui/react-switch"
 import axios, { AxiosError } from "axios"
 import { Loader2, RefreshCcw } from "lucide-react"
@@ -148,7 +148,7 @@ export default function Dashboard() {
           Accept Messages: {acceptingMessages ? 'On' : 'Off'}
         </span>
       </div>
-      <Separator />
+      {/* <Separator /> */}
 
       <Button
         className="mt-4"

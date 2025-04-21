@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt"
 
 export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request })
+    console.log("token : ", token)
     const url = request.nextUrl
     if (token &&
         (
@@ -21,16 +22,17 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/sign-in', request.url))
     }
 
-    return NextResponse.redirect(new URL('/home', request.url))
+    // return NextResponse.redirect(new URL('/home', request.url))
+    return NextResponse.next()
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
     matcher: [
-        '/signIn',
-        '/signUp',
+        '/sign-in',
+        '/sign-up',
         '/',
-        '/dashboard/:path*',
+        '/dashboard',
         '/verify/:path*',
     ]
 }
