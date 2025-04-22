@@ -1,7 +1,7 @@
 # 🚀 Send-It
 
 <p align="center">
-  <img src="public/logo.png" alt="Send-it Logo" width="100"/>
+  <img src="public/logo.png" alt="Send-it Logo" width="100" style="border-radius:50%; border:2px solid 	rgb(194, 65, 12)"/>
 </p>
 
 <h1 align="center">Send-it</h1>
