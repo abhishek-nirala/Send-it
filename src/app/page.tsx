@@ -6,7 +6,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { motion } from "framer-motion"
 import Autoplay from "embla-carousel-autoplay"
 import Footer from "@/components/Footer"
-import { MessageSquare } from "lucide-react"
+import Image from "next/image"
 
 
 
@@ -49,7 +49,7 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="inline-block mb-4"
               >
-                <MessageSquare size={60} className="mx-auto text-fuchsia-400 drop-shadow-lg" />
+                <Image className="rounded-[50%] border-orange-700 border-[2px]" src='/logo.png' width={100} height={100} alt="Brand Logo" />
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-extrabold leading-tight md:leading-[1.15] bg-gradient-to-r from-fuchsia-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
                 Share Your Thoughts Anonymously
@@ -61,7 +61,7 @@ export default function Home() {
                 <br></br>
                 No <span className="font-bold text-fuchsia-400">names</span>.
                 No <span className="font-bold text-fuchsia-400">judgment</span>. No
-                <span className="font-bold text-fuchsia-400"> identity</span>. Just you honest voice.
+                <span className="font-bold text-fuchsia-400"> identity</span>. Just your honest voice.
               </h5>
             </motion.div>
 
