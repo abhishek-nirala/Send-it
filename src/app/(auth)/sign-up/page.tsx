@@ -98,9 +98,10 @@ const SignUp = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-200">
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900 ">
         <div className="w-full max-w-md text-center bg-white border border-gray-200 rounded-lg shadow-md p-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
+          <h1 className="text-4xl font-bold mb-2  bg-gradient-to-r from-fuchsia-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
+
             Join FeedBack App
           </h1>
           <p className="text-lg text-gray-600 mb-3 mt-5">to give anonymous Feedback </p>

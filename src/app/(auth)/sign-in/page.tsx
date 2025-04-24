@@ -1,8 +1,6 @@
 'use client'
 import { toast } from '@/hooks/use-toast'
-// import { ApiResponses } from '@/types/ApiResponses'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -44,7 +42,6 @@ const SignIn = () => {
         identifier: data.email,
         password: data.password
       })
-      console.log("signIn result : ", result)
       if (result?.error) {
         toast({
           title: 'Login Failed',
@@ -52,10 +49,8 @@ const SignIn = () => {
           variant: 'destructive'
         })
       }
-      console.log("result.error : ", result?.error)
       if (result?.url) {
         router.push('/look-up')
-        // alert("you have successfully logged in")
       }
     } catch (error) {
       console.log(error);
@@ -64,7 +59,7 @@ const SignIn = () => {
         description: 'Internal Error',
         variant: 'destructive'
       })
-    }finally{
+    } finally {
       setIsSubmitting(false)
     }
 
@@ -72,7 +67,7 @@ const SignIn = () => {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-200">
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900">
         <div className="w-full max-w-md text-center bg-white border border-gray-200 rounded-lg shadow-md p-8">
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
             Welcome Back
@@ -127,7 +122,7 @@ const SignIn = () => {
           </Form>
           <div className="mt-5">
             <span className="">
-              Have you not joined yet? 
+              Have you not joined yet?
             </span>
             <Link href="/sign-up" className="text-blue-700 font-bold font-mono"> Sign-Up</Link>
           </div>

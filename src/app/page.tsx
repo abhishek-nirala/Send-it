@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import Autoplay from "embla-carousel-autoplay"
 import Footer from "@/components/Footer"
 import Image from "next/image"
-
+import NavBar from "@/components/Navbar"
 
 
 export default function Home() {
@@ -37,7 +37,8 @@ export default function Home() {
     },
   }
 
-  return (
+  return (<>
+    <NavBar/>
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white">
       <div className="container mx-auto px-4 py-16">
         {mounted && (
@@ -102,6 +103,7 @@ export default function Home() {
       </div>
       <Footer />
     </div>
+    </>
   )
 }
 

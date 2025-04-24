@@ -42,11 +42,9 @@ const NavBar: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand */}
           <div className="flex items-center space-x-2">
-            {/* <MessageSquareShare className="text-fuchsia-400" /> */}
-            <Image className='rounded-[50%] border-orange-700 border-[2px]' src='/logo.png' height={40} width={40} alt = 'send-it logo'/>
-            <Link href="/" className="text-xl font-bold bg-gradient-to-r from-fuchsia-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
+            <Image className='mr-2 rounded-[50%] border-orange-700 border-[2px]' src='/logo.png' height={40} width={40} alt = 'send-it logo'/>
+            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-fuchsia-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
               Send-It
             </Link>
           </div>

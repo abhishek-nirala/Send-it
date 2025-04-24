@@ -17,111 +17,117 @@ import { useForm } from "react-hook-form"
 
 export default function Dashboard() {
 
-    const [message, setMessage] = useState<Message[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [isSwitchLoading, setIsSwitchLoading] = useState(false)
+  const [message, setMessage] = useState<Message[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSwitchLoading, setIsSwitchLoading] = useState(false)
+  const [profileUrl, setProfileUrl] = useState('');
 
-    const { toast } = useToast()
+  const { toast } = useToast()
 
-    const handleDeleteMessage = (messageId: string) => {
-        setMessage(message.filter((msg) => msg._id !== messageId))
+  const handleDeleteMessage = (messageId: string) => {
+    setMessage(message.filter((msg) => msg._id !== messageId))
+  }
+
+  const { data: session } = useSession();
+
+  const form = useForm({
+    resolver: zodResolver(acceptMessageSchema)
+  })
+  const { register, watch, setValue } = form;
+
+  const acceptingMessages = watch("acceptingMessages")
+
+  const fetchIsAcceptingMessage = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const result = await axios.get('/api/accept-messages')
+      setValue('acceptingMessages', result.data.isAcceptingMessages)
+    } catch (err) {
+      console.log("error : ", err)
+      const axiosError = err as AxiosError<ApiResponses>
+      toast({
+        title: "Error",
+        description: axiosError.response?.data.message || "Failed to update message settings",
+        variant: "destructive"
+      })
+    } finally {
+      setIsLoading(false);
     }
+  }, [setValue, toast])
 
-    const { data: session } = useSession();
-
-    const form = useForm({
-        resolver: zodResolver(acceptMessageSchema)
-    })
-    const { register, watch, setValue } = form;
-
-    const acceptingMessages = watch("acceptingMessages")
-
-    const fetchIsAcceptingMessage = useCallback(async () => {
-        setIsLoading(true)
-        try {
-            const result = await axios.get('/api/accept-messages')
-            setValue('acceptMessages', result.data.isAcceptingMessages)
-        } catch (err) {
-            console.log("error : ", err)
-            const axiosError = err as AxiosError<ApiResponses>
-            toast({
-                title: "Error",
-                description: axiosError.response?.data.message || "Failed to update message settings",
-                variant: "destructive"
-            })
-        } finally {
-            setIsLoading(false);
-        }
-    }, [setValue, toast])
-
-    const fetchAllMessages = useCallback(async (refresh: boolean = false) => {
-        setIsLoading(true)
-        setIsSwitchLoading(false)
-        try {
-            const result = await axios.get<ApiResponses>('/api/get-messages')
-            setMessage(result.data.messages || [])
-            if (refresh) {
-                toast({
-                    title: "Messages Refreshed",
-                    description: "Showing recent messages"
-                })
-            }
-        } catch (error) {
-            console.log("error : ", error)
-            const axiosError = error as AxiosError<ApiResponses>
-            toast({
-                title: "Error",
-                description: axiosError.response?.data.message || "Failed to update message",
-                variant: "destructive"
-            })
-        } finally {
-            setIsLoading(false)
-            setIsSwitchLoading(false)
-        }
-    }, [toast, setMessage])
-
-    useEffect(() => {
-        if (!session || !session.user) return
-        fetchAllMessages()
-        fetchIsAcceptingMessage();
-
-    }, [session, fetchAllMessages, fetchIsAcceptingMessage])
-
-    //handle switching
-    const handleSwitching = async () => {
-        try {
-            const result = await axios.post<ApiResponses>('/api/accept-messages', {
-                acceptingMessages: !acceptingMessages
-            })
-            setValue('acceptingMessages', !acceptingMessages)
-            toast({
-                title: result.data.message,
-                variant: 'default'
-            })
-        } catch (error) {
-            console.log("error : ", error)
-            const axiosError = error as AxiosError<ApiResponses>
-            toast({
-                title: "Error",
-                description: axiosError.response?.data.message || "Failed to update message",
-                variant: "destructive"
-            })
-        }
-    }
-    const {username} = session?.user as User
-    const baseUrl = `${window.location.protocol}//${window.location.hostname}`
-    const profileUrl = `${baseUrl}/u/${username}`
-
-    const copyToClipboard = ()=>{
-        navigator.clipboard.writeText(profileUrl)
+  const fetchAllMessages = useCallback(async (refresh: boolean = false) => {
+    setIsLoading(true)
+    setIsSwitchLoading(false)
+    try {
+      const result = await axios.get<ApiResponses>('/api/get-messages')
+      setMessage(result.data.messages || [])
+      if (refresh) {
         toast({
-            title:"Text Copied",
-            variant:"default"
+          title: "Messages Refreshed",
+          description: "Showing recent messages"
         })
+      }
+    } catch (error) {
+      console.log("error : ", error)
+      const axiosError = error as AxiosError<ApiResponses>
+      toast({
+        title: "Error",
+        description: axiosError.response?.data.message || "Failed to update message",
+        variant: "destructive"
+      })
+    } finally {
+      setIsLoading(false)
+      setIsSwitchLoading(false)
     }
-    if(!session || !session.user) return <><div>Did not find User</div></>
-    return (<>
-         <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
+  }, [toast, setMessage])
+
+  useEffect(() => {
+    if (!session || !session.user) return
+    fetchAllMessages()
+    fetchIsAcceptingMessage();
+
+  }, [session, fetchAllMessages, fetchIsAcceptingMessage])
+
+  //handle switching
+  const handleSwitching = async () => {
+    try {
+      const result = await axios.post<ApiResponses>('/api/accept-messages', {
+        acceptingMessages: !acceptingMessages
+      })
+      setValue('acceptingMessages', !acceptingMessages)
+      toast({
+        title: result.data.message,
+        variant: 'default'
+      })
+    } catch (error) {
+      console.log("error : ", error)
+      const axiosError = error as AxiosError<ApiResponses>
+      toast({
+        title: "Error",
+        description: axiosError.response?.data.message || "Failed to update message",
+        variant: "destructive"
+      })
+    }
+  }
+  useEffect(() => {
+    if (!session || !session.user) return ;
+
+    const { username } = session.user as User;
+    const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
+    setProfileUrl(`${baseUrl}/u/${username}`);
+  }, [session]);
+
+  if (!session || !session.user) return <><div>Did not find User</div></>;
+  console.log("profileUrl : ", profileUrl)
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(profileUrl)
+    toast({
+      title: "Text Copied",
+      variant: "default"
+    })
+  }
+  return (<>
+    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
@@ -178,16 +184,6 @@ export default function Dashboard() {
         )}
       </div>
     </div>
-    </>)
+  </>)
 }
-
-
-
-
-
-
-
-
-
-
 

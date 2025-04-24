@@ -5,20 +5,20 @@ import { getToken } from "next-auth/jwt"
 
 export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request })
-    console.log("token : ", token)
+    // console.log("token : ", token)
     const url = request.nextUrl
     if (token &&
         (
             url.pathname.startsWith('/sign-up') ||
             url.pathname.startsWith('/sign-in') ||
-            url.pathname.startsWith('/verify') ||
-            url.pathname.startsWith('/')
+            url.pathname.startsWith('/verify')
+            // url.pathname.startsWith('/') //DANGER: never include '/' route. causes infinite re-renders.because this condition includes '/' which also includes '/dashboard'.
         )
     ) {
 
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
-    if(!token && url.pathname.startsWith('/dashboard')){
+    if (!token && url.pathname.startsWith('/dashboard')) {
         return NextResponse.redirect(new URL('/sign-in', request.url))
     }
 
