@@ -1,6 +1,8 @@
 'use client'
 
+import Footer from "@/components/Footer"
 import MessageCard from "@/components/MessageCard"
+import NavBar from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { Message, User } from "@/model/User"
@@ -22,6 +24,7 @@ export default function Dashboard() {
   const [isSwitchLoading, setIsSwitchLoading] = useState(false)
   const [profileUrl, setProfileUrl] = useState('');
 
+  console.log("message: ", message);
   const { toast } = useToast()
 
   const handleDeleteMessage = (messageId: string) => {
@@ -110,7 +113,7 @@ export default function Dashboard() {
     }
   }
   useEffect(() => {
-    if (!session || !session.user) return ;
+    if (!session || !session.user) return;
 
     const { username } = session.user as User;
     const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
@@ -127,8 +130,9 @@ export default function Dashboard() {
     })
   }
   return (<>
+  <NavBar/>
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
-      <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
+      <h1 className="text-4xl font-bold mb-4">User Profile</h1>
 
       <div className="mb-4">
         <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{' '}
@@ -178,12 +182,14 @@ export default function Dashboard() {
               message={message}
               onMessageDelete={handleDeleteMessage}
             />
+            
           ))
         ) : (
           <p>No messages to display.</p>
         )}
       </div>
     </div>
+    <Footer/>
   </>)
 }
 

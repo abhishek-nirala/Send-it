@@ -52,7 +52,7 @@ const SignUp = () => {
         setIsCheckingUsername(true);
         setUsernameMessage('');
         try {
-          //api call to check username
+          //api call to check username &&& this is how to send data using queryParams. 
           const response = await axios.get(`/api/check-username-unique?username=${username}`)
           setUsernameMessage(response.data.message)
         } catch (error) {

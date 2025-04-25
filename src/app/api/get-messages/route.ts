@@ -9,6 +9,7 @@ export async function GET() {
     await dbConnect();
     const session = await getServerSession(authOptions)
     const user: User = session?.user as User
+    // console.log("session: ",session)
 
     if (!session || !session.user) {
         return Response.json({
@@ -20,10 +21,10 @@ export async function GET() {
 
     try {
         const user = await UserModel.aggregate([
-            { $match: { $_id: userId } },
+            { $match: { _id: userId } },
             { $unwind: '$messages' },
             { $sort: { 'messages.createdAt': -1 } },
-            { $group: { _id: '$id', messages: { $push: '$messages' } } }
+            { $group: { _id: '$_id', messages: { $push: '$messages' } } }
         ])
 
         if (!user || user.length === 0) {
@@ -32,6 +33,8 @@ export async function GET() {
                 message: "User not found"
             }, { status: 404 })
         }
+        // console.log("messages: ", user[0].messages);
+        
         return Response.json({
             success: true,
             messages: user[0].messages

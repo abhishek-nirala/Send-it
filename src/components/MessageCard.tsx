@@ -4,7 +4,6 @@ import React from 'react'
 
 import {
     Card,
-    CardDescription,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -21,7 +20,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from './ui/button'
-import { X } from 'lucide-react'
+import { Trash} from 'lucide-react'
 import { Message } from '@/model/User'
 import { useToast } from '@/hooks/use-toast'
 import axios from 'axios'
@@ -49,31 +48,33 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardPops) => {
     }
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="destructive"><X className='h-5 w-5' /></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                account and remove your data from our servers.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleMessageDelete}>Continue</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-                <CardDescription>Card Description</CardDescription>
-            </CardHeader>
+        <>
+            <Card>
+                <CardHeader>
+                    <CardTitle>{message.content}</CardTitle>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button className='bg-black w-9 h-9 text-2xl hover:bg-red-500 '>
+                                <Trash color='white' fill='white' />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Delete Message?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This Message will be deleted permanently!
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={handleMessageDelete}>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </CardHeader>
 
-        </Card>
+            </Card>
+        </>
 
     )
 }
