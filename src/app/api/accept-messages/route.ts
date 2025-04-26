@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         }
         return Response.json({
             success: true,
-            message: "Message Accepting"
+            message: acceptingMessages?"Messages Accepting":"Status Changed : OFF"
         }, { status: 200 })
 
     } catch (error) {
