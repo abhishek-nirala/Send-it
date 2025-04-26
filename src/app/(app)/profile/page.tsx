@@ -150,7 +150,7 @@ export default function Dashboard() {
 
 
         <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-2">Your Message Link</h2>
+          <h2 className="text-xl font-semibold mb-2">Your Profile Link</h2>
           <div className="flex flex-col md:flex-row items-center gap-2">
             <input
               type="text"
@@ -187,7 +187,7 @@ export default function Dashboard() {
                 }
               }}
               disabled={isSwitchLoading}
-              className="w-12 h-6 bg-gray-300 rounded-full relative data-[state=checked]:bg-green-500 transition-colors"
+              className="w-12 h-6 bg-gray-400 rounded-full relative data-[state=checked]:bg-green-500 transition-colors"
             >
               <SwitchPrimitive.Thumb className="block w-5 h-5 bg-white rounded-full transition-transform translate-x-1 data-[state=checked]:translate-x-6" />
 
