@@ -1,94 +1,221 @@
+// 'use client'
+
+// import { useSession } from 'next-auth/react'
+// import { useForm } from 'react-hook-form'
+// import React, { useState } from 'react'
+// import { z } from 'zod'
+// import { messageSchema } from '@/schemas/messageSchema';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+// import { Input } from '@/components/ui/input';
+// import axios, { AxiosError } from 'axios';
+// import { Button } from '@/components/ui/button'
+// import { Loader2 } from 'lucide-react'
+// import { toast } from '@/hooks/use-toast'
+// import { ApiResponses } from '@/types/ApiResponses'
+// import NavBar from '@/components/Navbar'
+
+// function Message() {
+//     const [loading, setIsLoading] = useState(false)
+//     const {data: session} = useSession();
+//     const username = session?.user?.username
+
+
+//     const form = useForm<z.infer<typeof messageSchema>>({
+//         resolver: zodResolver(messageSchema),
+//         defaultValues: {
+//             content: ''
+//         }
+//     })
+//     const onSubmit = async (data: z.infer<typeof messageSchema>) => {
+//         setIsLoading(true)
+//         console.log("data @message: ", data)
+
+//         try {
+//             const response = await axios.post(`/api/send-messages?username=${username}`, data)
+//             // console.log('response @message: ', response.data)
+//             if (response.data.success) {
+//                 toast({
+//                     title: "Success",
+//                     description: response.data.message,
+//                     variant: 'default'
+//                 })
+//             }
+//         } catch (error) {
+//             console.log("error @ message: ", error)
+//             const axiosError = error as AxiosError<ApiResponses>
+//             toast({
+//                 title: "Error",
+//                 description: axiosError.response?.data.message,
+//                 variant: "destructive"
+//             })
+//         } finally {
+//             setIsLoading(false)
+//         }
+
+//     }
+
+//     return (
+//         <>
+//             <NavBar />
+//             <div>message</div>
+//             <Form {...form}>
+//                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+
+//                     <FormField
+//                         name="content"
+//                         control={form.control}
+//                         render={({ field }) => (
+//                             <FormItem className="text-left space-y-2">
+//                                 <FormLabel>Message</FormLabel>
+//                                 <FormControl>
+//                                     <Input placeholder="type your message here"
+//                                         {...field}
+//                                     />
+//                                 </FormControl>
+//                             </FormItem>
+//                         )}
+//                     />
+//                     {/* <input type="submit" /> */}
+//                     <Button type='submit' disabled={loading}>
+//                         {
+//                             loading ? <>
+//                                 <Loader2 className='animate-spin' />
+//                             </>
+//                                 :
+//                                 "Submit"
+//                         }
+//                     </Button>
+//                 </form>
+//             </Form>
+//         </>
+
+
+
+//     )
+// }
+
+// export default Message
+
+
 'use client'
 
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import React, { useState } from 'react'
 import { z } from 'zod'
-import { messageSchema } from '@/schemas/messageSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import axios from 'axios';
+import { messageSchema } from '@/schemas/messageSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import axios, { AxiosError } from 'axios'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
-// import { toast } from '@/hooks/use-toast'
+import { toast } from '@/hooks/use-toast'
+import { ApiResponses } from '@/types/ApiResponses'
+import NavBar from '@/components/Navbar'
+import { motion } from 'framer-motion'
 
 function Message() {
-    // const [message, setMessage] = useState<typeof messageSchema>()
-    const [loading, setIsLoading] = useState(false)
-    const { data: session } = useSession();
-    // if (status === "unauthenticated") {
-    //     toast({
-    //         title: "Auth failed",
-    //         description: "User not authenticated",
-    //         variant: "destructive"
-    //     })
-    //     return
+  const [loading, setIsLoading] = useState(false)
+  const { data: session } = useSession()
+  const username = session?.user?.username
 
-    console.log("session.user @messages at client : ", session?.user?.username)
-    const username = session?.user?.username
-
-    const form = useForm<z.infer<typeof messageSchema>>({
-        resolver: zodResolver(messageSchema),
-        defaultValues: {
-            content: ''
-        }
-    })
-    const onSubmit = async (data: z.infer<typeof messageSchema>) => {
-        setIsLoading(true)
-        console.log("data @message: ", data)
-
-        try {
-            const response = await axios.post(`/api/send-messages?username=${username}`, data)
-            console.log('response @message: ', response.data)
-        } catch (error) {
-            console.log("error @ message: ", error)
-        }finally{
-            setIsLoading(false)
-        }
-
+  const suggestMessage = async () => {
+    const response = await axios.get('/api/suggest-messages')
+    if(response.data.status){
+      console.log("suggested messages : ", response.data.message)
     }
+  }
+  suggestMessage();
+  const form = useForm<z.infer<typeof messageSchema>>({
+    resolver: zodResolver(messageSchema),
+    defaultValues: {
+      content: '',
+    },
+  })
 
-    return (
-        <>
-            <div>message</div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+  const onSubmit = async (data: z.infer<typeof messageSchema>) => {
+    setIsLoading(true)
+    console.log('data @message: ', data)
 
-                    <FormField
-                        name="content"
-                        control={form.control}
-                        render={({ field }) => (
-                            <FormItem className="text-left space-y-2">
-                                <FormLabel>Message</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="type your message here"
-                                        {...field}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    {/* <input type="submit" /> */}
-                    <Button type='submit' disabled={loading}>
-                        {
-                            loading? <>
-                                <Loader2 className='animate-spin'/> 
-                            </>
-                            : 
-                            "Submit"
-                        }
-                    </Button>
-                </form>
-            </Form>
-        </>
+    try {
+      const response = await axios.post(`/api/send-messages?username=${username}`, data)
 
+      if (response.data.success) {
+        toast({
+          title: 'Success',
+          description: response.data.message,
+          variant: 'default',
+        })
+        form.reset()
+      }
+    } catch (error) {
+      console.log('error @ message: ', error)
+      const axiosError = error as AxiosError<ApiResponses>
+      toast({
+        title: 'Error',
+        description: axiosError.response?.data.message || 'Something went wrong',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  
 
+  return (
+    <>
+      <NavBar />
+      <main className="min-h-screen w-full bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white flex flex-col items-center justify-center px-6 py-10">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-extrabold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-400"
+        >
+          Enter your Send
+        </motion.h1>
 
-    )
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full max-w-md bg-[#1e293b] border border-gray-700 rounded-xl p-8 shadow-xl backdrop-blur-md"
+        >
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                name="content"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-gray-300 text-sm">Message</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Type your message here..."
+                        className="bg-[#334155] border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-sky-500 transition"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-sky-500 to-indigo-500 hover:opacity-90 transition-all duration-300 text-white font-semibold"
+              >
+                {loading ? <Loader2 className="animate-spin h-5 w-5" /> : 'Send'}
+              </Button>
+            </form>
+          </Form>
+        </motion.div>
+      </main>
+    </>
+  )
 }
 
 export default Message
-
-
 

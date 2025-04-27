@@ -20,7 +20,7 @@ export async function GET() {
         const chatCompletion = await getGroqChatCompletion();
         const chatMessage = chatCompletion.choices[0]?.message?.content || "";
         // Print the completion returned by the LLM.
-        console.log(chatMessage);
+        // console.log(chatMessage);
         return Response.json({
             success: true,
             message: chatMessage,

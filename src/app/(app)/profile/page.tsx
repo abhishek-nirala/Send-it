@@ -80,27 +80,7 @@ export default function Dashboard() {
     }
   }, [toast])
 
-  const handleDeleteMessage = async () => {
-    try {
-      const response = await axios.delete(`/api/delete-message?username=${session?.user?.username}`)
-      if (response.data.status) {
-        toast({
-          title: "Success",
-          description: response.data.message,
-          variant: "default"
-        })
-      }
 
-    } catch (error) {
-      console.log("error while deleting msg @profile/page.tsx : ", error)
-      const axiosErr = error as AxiosError<ApiResponses>;
-      toast({
-        title: "Error while deleting message",
-        description: axiosErr?.response?.data.message,
-        variant: "destructive"
-      })
-    }
-  }
   useEffect(() => {
     if (!session?.user) return
     fetchAllMessages()
@@ -233,7 +213,9 @@ export default function Dashboard() {
           {message.length > 0 ? (
             message.map((msg) => (
               <motion.div key={msg._id as string} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
-                <MessageCard message={msg} onMessageDelete={handleDeleteMessage} />
+                <MessageCard message={msg} onDelete={(id) => {
+                  setMessage((prev) => prev.filter((m) => m._id !== id))
+                }} />
               </motion.div>
             ))
           ) : (

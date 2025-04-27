@@ -9,7 +9,7 @@ export async function GET() {
     await dbConnect();
     const session = await getServerSession(authOptions)
     const user: User = session?.user as User
-    // console.log("session: ",session)
+    console.log("session at get-message route: ",session)
 
     if (!session || !session.user) {
         return Response.json({
