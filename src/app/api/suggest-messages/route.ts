@@ -1,9 +1,10 @@
-
 import Groq from "groq-sdk";
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 async function getGroqChatCompletion() {
-    const content = "Create a list of four open-ended and engaging questions formatted as a single string. Each questions should be separated by '||'.These questions are for an anonymous social messaging platform, Qooh.me, and should be diverse for diverse audience. Avoid personal or sensitive topics, focusing instead on universal theme that encourages friendly interactions. For example you output should be structured like this: What's a hobby you've started recently? || If you could travel anywhere in the world, where would you go? || What's your favorite book and why? Ensure that the questions are engaging and open-ended to encourage responses.";
+    // const content = "Create a list of four open-ended and engaging questions formatted as a single string. Each questions should be separated by '||'.These questions are for an anonymous social messaging platform, Qooh.me, and should be diverse for diverse audience. Avoid personal or sensitive topics, focusing instead on universal theme that encourages friendly interactions. For example you output should be structured like this: What's a hobby you've started recently? || If you could travel anywhere in the world, where would you go? || What's your favorite book and why? Ensure that the questions are engaging and open-ended to encourage responses.";
+
+    const content = "Suggest 5 super casual, Gen-Z-style open-ended messages. Each should be 7 to 9 words long, sound chill and friendly (like texting a friend), and be separated by '||'. Keep it light, relatable, and fun, not formal."
     return groq.chat.completions.create({
         messages: [
             {
@@ -25,7 +26,7 @@ export async function GET() {
             success: true,
             message: chatMessage,
         });
-    }catch(error){
+    } catch (error) {
         return Response.json({
             success: false,
             message: "Failed to get message suggestions",

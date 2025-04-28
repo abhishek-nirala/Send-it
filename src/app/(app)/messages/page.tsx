@@ -1,108 +1,9 @@
-// 'use client'
-
-// import { useSession } from 'next-auth/react'
-// import { useForm } from 'react-hook-form'
-// import React, { useState } from 'react'
-// import { z } from 'zod'
-// import { messageSchema } from '@/schemas/messageSchema';
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-// import { Input } from '@/components/ui/input';
-// import axios, { AxiosError } from 'axios';
-// import { Button } from '@/components/ui/button'
-// import { Loader2 } from 'lucide-react'
-// import { toast } from '@/hooks/use-toast'
-// import { ApiResponses } from '@/types/ApiResponses'
-// import NavBar from '@/components/Navbar'
-
-// function Message() {
-//     const [loading, setIsLoading] = useState(false)
-//     const {data: session} = useSession();
-//     const username = session?.user?.username
-
-
-//     const form = useForm<z.infer<typeof messageSchema>>({
-//         resolver: zodResolver(messageSchema),
-//         defaultValues: {
-//             content: ''
-//         }
-//     })
-//     const onSubmit = async (data: z.infer<typeof messageSchema>) => {
-//         setIsLoading(true)
-//         console.log("data @message: ", data)
-
-//         try {
-//             const response = await axios.post(`/api/send-messages?username=${username}`, data)
-//             // console.log('response @message: ', response.data)
-//             if (response.data.success) {
-//                 toast({
-//                     title: "Success",
-//                     description: response.data.message,
-//                     variant: 'default'
-//                 })
-//             }
-//         } catch (error) {
-//             console.log("error @ message: ", error)
-//             const axiosError = error as AxiosError<ApiResponses>
-//             toast({
-//                 title: "Error",
-//                 description: axiosError.response?.data.message,
-//                 variant: "destructive"
-//             })
-//         } finally {
-//             setIsLoading(false)
-//         }
-
-//     }
-
-//     return (
-//         <>
-//             <NavBar />
-//             <div>message</div>
-//             <Form {...form}>
-//                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-
-//                     <FormField
-//                         name="content"
-//                         control={form.control}
-//                         render={({ field }) => (
-//                             <FormItem className="text-left space-y-2">
-//                                 <FormLabel>Message</FormLabel>
-//                                 <FormControl>
-//                                     <Input placeholder="type your message here"
-//                                         {...field}
-//                                     />
-//                                 </FormControl>
-//                             </FormItem>
-//                         )}
-//                     />
-//                     {/* <input type="submit" /> */}
-//                     <Button type='submit' disabled={loading}>
-//                         {
-//                             loading ? <>
-//                                 <Loader2 className='animate-spin' />
-//                             </>
-//                                 :
-//                                 "Submit"
-//                         }
-//                     </Button>
-//                 </form>
-//             </Form>
-//         </>
-
-
-
-//     )
-// }
-
-// export default Message
-
 
 'use client'
 
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { messageSchema } from '@/schemas/messageSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -115,19 +16,28 @@ import { toast } from '@/hooks/use-toast'
 import { ApiResponses } from '@/types/ApiResponses'
 import NavBar from '@/components/Navbar'
 import { motion } from 'framer-motion'
+import Footer from '@/components/Footer'
 
 function Message() {
   const [loading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const username = session?.user?.username
+  const [message, setMessage] = useState<string[]>([])
 
   const suggestMessage = async () => {
     const response = await axios.get('/api/suggest-messages')
-    if(response.data.status){
-      console.log("suggested messages : ", response.data.message)
+    // console.log("response at message: ", response)
+    if (response.data.success) {
+      // console.log("suggested messages : ", response.data.message)
+      const splitMessage = response.data.message.split("||")
+      console.log("splitMessage : ", splitMessage)
+      setMessage(splitMessage)
     }
   }
-  suggestMessage();
+  useEffect(() => {
+    suggestMessage();
+  }, [])
+
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
     defaultValues: {
@@ -161,8 +71,9 @@ function Message() {
     } finally {
       setIsLoading(false)
     }
+
   }
-  
+
 
   return (
     <>
@@ -212,7 +123,36 @@ function Message() {
             </form>
           </Form>
         </motion.div>
+        <div className="mt-12 w-full max-w-md flex flex-col gap-4 items-center">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-lg font-semibold text-sky-400 mb-2"
+          >
+            AI Generated Suggestions
+          </motion.p>
+
+          {message && message.map((msg, index) => (
+            <motion.input
+              key={index}
+              type="text"
+              value={msg}
+              disabled
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="bg-[#334155] border border-gray-600 text-white placeholder-gray-400 
+                focus:ring-2 focus:ring-sky-500 
+                px-5 py-3 rounded-lg w-full 
+                text-center text-sm shadow-md"
+            />
+          ))}
+        </div>
+          <Footer/>
       </main>
+
+
     </>
   )
 }

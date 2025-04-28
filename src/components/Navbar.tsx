@@ -19,9 +19,9 @@ const NavBar: React.FC = () => {
   const pathname = usePathname()
 
   const routes = [
-    { href: '/messages', label: 'Messages' },
     { href: '/profile', label: 'Profile' },
-    { href: '/about', label: 'About' },
+    { href: '/messages', label: 'Messages' },
+    { href: '/feed', label: 'Feed' },
   ]
 
   const getLinkStyle = (href: string) =>
