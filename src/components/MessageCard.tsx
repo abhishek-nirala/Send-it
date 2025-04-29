@@ -61,7 +61,7 @@ const MessageCard = ({ message, onDelete }: MessageCardProps) => {
     return (
         <Card
             className={cn(
-                "transition-all duration-300 overflow-hidden bg-[#1e293b] border border-gray-700 rounded-xl p-6 shadow-lg hover:shadow-2xl",
+                "transition-all duration-500 overflow-hidden bg-[#1e293b] border border-gray-700 rounded-xl p-6 shadow-lg hover:shadow-2xl",
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 h-0 p-0 m-0"
             )}
         >

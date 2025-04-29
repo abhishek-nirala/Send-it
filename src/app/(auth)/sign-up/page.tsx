@@ -74,8 +74,8 @@ const SignUp = () => {
     try {
       //api call to register user
       const response = await axios.post('/api/signUP', data)
-      console.log("onSubmitting data : ", data)
-      console.log("response : ", response)
+      // console.log("onSubmitting data : ", data)
+      // console.log("response : ", response)
       toast({
         title: response.data.message,
         description: "You have been registered successfully",

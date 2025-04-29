@@ -67,7 +67,7 @@ export default function VerifyCode() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-200">
       <div className="w-full max-w-md text-center bg-white border border-gray-200 rounded-lg shadow-md p-8">
         <h5 className="text-xl font-bold mb-2 bg-gradient-to-r from-gray-400 to-slate-800 text-transparent bg-clip-text">
-          verification code has been sent to your email
+          verification code has been sent to your email (check spam also)
         </h5>
         <p>username : {params.username} </p>
         <Form {...form}>

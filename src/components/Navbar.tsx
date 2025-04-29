@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
 
   const routes = [
     { href: '/profile', label: 'Profile' },
-    { href: '/messages', label: 'Messages' },
+    { href: '/messages', label: 'Sends' },
     { href: '/feed', label: 'Feed' },
   ]
 

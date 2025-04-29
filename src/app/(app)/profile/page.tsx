@@ -70,9 +70,9 @@ export default function Dashboard() {
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponses>
       toast({
-        title: "Error",
+        title: "Oops!",
         description: axiosError.response?.data.message || "Failed to fetch messages",
-        variant: "destructive"
+        variant: "default"
       })
     } finally {
       setIsLoading(false)
@@ -102,7 +102,7 @@ export default function Dashboard() {
     return () => clearInterval(interval)
   }, [])
 
-  if (!session?.user) return <div className="text-white text-center p-10">User not found</div>
+  // if (!session?.user) return <div className="text-white text-center p-10">User not found</div>
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl)

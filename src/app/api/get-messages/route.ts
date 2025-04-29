@@ -30,7 +30,7 @@ export async function GET() {
         if (!user || user.length === 0) {
             return Response.json({
                 success: false,
-                message: "User not found"
+                message: "Messages Not Found"
             }, { status: 404 })
         }
         // console.log("messages: ", user[0].messages);

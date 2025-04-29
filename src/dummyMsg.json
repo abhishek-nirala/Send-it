@@ -1,13 +1,18 @@
 [
     {
         "username": "CoolCat42",
-        "message": "Absolutely loved this feature, keep it up!",
+        "message": "Am I cool and amzing cause i'm cool cat 😁",
         "time": "3 days ago"
     },
     {
         "username": "TechieGem",
         "message": "Not bad, but could use some improvements.",
         "time": "7 days ago"
+    },
+    {
+        "username": "Tharki",
+        "message": "If i look at my life, coding is seems very interesting thing to do.",
+        "time": "1 day ago"
     },
     {
         "username": "PixelMaster",
@@ -43,5 +48,50 @@
         "username": "GamingGuru",
         "message": "Totally worth it, exceeded my expectations!",
         "time": "5 days ago"
+    },
+    {
+        "username": "TechSavvy89",
+        "message": "Super intuitive! Made my workflow smoother.",
+        "time": "5 days ago"
+    },
+    {
+        "username": "GadgetGuru",
+        "message": "Decent update, but could use some performance tweaks.",
+        "time": "7 days ago"
+    },
+    {
+        "username": "CodeWizard",
+        "message": "Impressive! The new features are a game-changer.",
+        "time": "3 days ago"
+    },
+    {
+        "username": "DesignDiva",
+        "message": "Loving the UI changes! Very sleek and modern.",
+        "time": "2 days ago"
+    },
+    {
+        "username": "BetaTester101",
+        "message": "Encountered a few bugs, but overall a solid improvement.",
+        "time": "6 days ago"
+    },
+    {
+        "username": "GamingAce",
+        "message": "Great experience, but waiting for more enhancements!",
+        "time": "9 days ago"
+    },
+    {
+        "username": "MusicLoverX",
+        "message": "Smooth integration—works like a charm!",
+        "time": "1 day ago"
+    },
+    {
+        "username": "ExplorerZone",
+        "message": "Highly recommended! A big step forward.",
+        "time": "4 days ago"
+    },
+    {
+        "username": "DataNerd",
+        "message": "Appreciate the analytics features—very useful!",
+        "time": "8 days ago"
     }
 ]

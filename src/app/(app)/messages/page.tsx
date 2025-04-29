@@ -17,6 +17,7 @@ import { ApiResponses } from '@/types/ApiResponses'
 import NavBar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 import Footer from '@/components/Footer'
+import { Separator } from '@radix-ui/react-separator'
 
 function Message() {
   const [loading, setIsLoading] = useState(false)
@@ -26,11 +27,8 @@ function Message() {
 
   const suggestMessage = async () => {
     const response = await axios.get('/api/suggest-messages')
-    // console.log("response at message: ", response)
     if (response.data.success) {
-      // console.log("suggested messages : ", response.data.message)
       const splitMessage = response.data.message.split("||")
-      console.log("splitMessage : ", splitMessage)
       setMessage(splitMessage)
     }
   }
@@ -47,7 +45,7 @@ function Message() {
 
   const onSubmit = async (data: z.infer<typeof messageSchema>) => {
     setIsLoading(true)
-    console.log('data @message: ', data)
+    // console.log('data @message: ', data)
 
     try {
       const response = await axios.post(`/api/send-messages?username=${username}`, data)
@@ -149,6 +147,7 @@ function Message() {
             />
           ))}
         </div>
+        <Separator className='my-8'/>
           <Footer/>
       </main>
 

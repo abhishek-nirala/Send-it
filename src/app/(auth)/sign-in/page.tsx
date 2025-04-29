@@ -50,7 +50,7 @@ const SignIn = () => {
         })
       }
       if (result?.url) {
-        router.push('/look-up')
+        router.push('/profile')
       }
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ const SignIn = () => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="text-left space-y-2">
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Email | Username</FormLabel>
                     <FormControl>
                       <Input type="text" placeholder="example001@email.com"
                         {...field}

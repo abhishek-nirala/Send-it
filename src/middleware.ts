@@ -22,7 +22,8 @@ export async function middleware(request: NextRequest) {
     if (!token && 
         (
             url.pathname.startsWith('/profile') || 
-            url.pathname.startsWith('messages')
+            url.pathname.startsWith('/messages') ||
+            url.pathname.startsWith('/feed')
         )) {
         return NextResponse.redirect(new URL('/sign-in', request.url))
     }
@@ -39,6 +40,7 @@ export const config = {
         '/',
         '/profile',
         '/verify/:path*',
-        '/messages'
+        '/messages',
+        '/feed'
     ]
 }

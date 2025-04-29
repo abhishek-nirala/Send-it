@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import dummyMsg from "@/dummyMsg.json"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { motion } from "framer-motion"
@@ -38,7 +38,7 @@ export default function Home() {
   }
 
   return (<>
-    <NavBar/>
+    <NavBar />
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white">
       <div className="container mx-auto px-4 py-16">
         {mounted && (
@@ -77,17 +77,19 @@ export default function Home() {
                   {dummyMsg.map((msg, index) => (
                     <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                       <motion.div className="p-2" whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}>
-                        <Card className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg">
-                          <CardHeader className="bg-white/10 text-fuchsia-300 px-6 py-4 font-semibold">
-                            {msg.username}
+                        <Card className="bg-[#1e293b] border border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-300 h-[200px]">
+                          <CardHeader>
+                            <CardTitle className="text-sky-400">{msg.username}</CardTitle>
+                            <CardDescription className="text-gray-400">Shared a message</CardDescription>
                           </CardHeader>
-                          <CardContent className="flex aspect-square items-center justify-center px-6 text-white text-lg">
-                            <span className="text-xl font-medium">{msg.message}</span>
+                          <CardContent>
+                            <p className="text-white line-clamp-2">{msg.message}</p>
                           </CardContent>
-                          <CardFooter className="text-sm text-slate-400 bg-white/5 px-6 py-3 border-t border-white/10">
-                            {msg.time}
+                          <CardFooter>
+                            <p className="text-xs text-gray-400">{msg.time}</p>
                           </CardFooter>
                         </Card>
+
                       </motion.div>
                     </CarouselItem>
                   ))}
@@ -103,7 +105,7 @@ export default function Home() {
       </div>
       <Footer />
     </div>
-    </>
+  </>
   )
 }
 
