@@ -35,6 +35,16 @@ const SignUp = () => {
   const { toast } = useToast()
   const router = useRouter()
 
+  useEffect(()=>{
+     toast({
+      title: "Tip - Just for exploration",
+      description: "Sign-In using username : un_known, password: 123456",
+      variant: "default"
+    })
+
+  },[toast])
+
+
   //zod implementation
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -177,7 +187,7 @@ const SignUp = () => {
           </Form>
           <div className="mt-5">
             <span className="">
-              Have you already joined? 
+              Have you already joined?
             </span>
             <Link href="/sign-in" className="text-blue-700 font-bold font-mono"> Sign-In</Link>
           </div>
