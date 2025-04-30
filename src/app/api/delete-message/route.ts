@@ -3,7 +3,7 @@ import UserModel from "@/model/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 
-export async function DELETE(request: Response) {
+export async function DELETE(request: Request) {
 
     const { searchParams } = new URL(request.url)
     const messageId = searchParams.get("id") as string
